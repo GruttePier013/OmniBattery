@@ -1390,6 +1390,7 @@
         "epex": "EPEX Spot (e.g. aWATTar)",
         "entsoe": "ENTSO-e (Transparency Platform)",
         "zonneplan": "Zonneplan",
+        "frank_energie": "Frank Energie",
         "tibber": "Tibber (service-based)"
       }
     }

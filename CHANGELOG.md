@@ -1,5 +1,11 @@
 # Changelog
 
+## [Unreleased]
+
+### Added
+
+- **Frank Energie dynamic pricing**: a new price integration that reads the `prices` attribute of the Frank Energie sensors (hourly or quarter-hourly, today and tomorrow), for both the import and the export price curve. Tested with HACS integration Frank Energie by https://github.com/HiDiHo01/home-assistant-frank_energie v2026.9.20
+
 ## [1.5.0] - 2026-10-04
 
 ### Added
