@@ -409,18 +409,26 @@
         "data": {
           "price_integration_type": "Price integration",
           "price_sensor": "Electricity price sensor",
-          "export_price_sensor": "Export/feed-in price sensor (optional)",
-          "export_price_integration_type": "Export price integration (optional)",
-          "zonneplan_export_bonus_enabled": "Apply Zonneplan export bonus",
           "solar_forecast_sensor": "Solar forecast sensor (kWh)"
         },
         "data_description": {
           "price_integration_type": "Select your electricity price provider integration. Nord Pool supports both the official Home Assistant integration and HACS. Tibber is service-based, so its price sensor can be left empty.",
           "price_sensor": "Sensor providing electricity prices (e.g., the official Nord Pool current-price sensor, a HACS Nordpool sensor, sensor.esios_pvpc for PVPC, or your CKW sensor for Switzerland)",
-          "export_price_sensor": "Sensor providing your export/feed-in prices. Leave empty to use the import price curve, which is correct when export is credited at the import price (net metering).",
-          "export_price_integration_type": "Attribute layout of the export price sensor. Leave empty to reuse the import integration. Tibber is not available here: it is service-based and its cache belongs to the import curve.",
-          "zonneplan_export_bonus_enabled": "Adds €0.02/kWh and 10% to Zonneplan export prices only. Has no effect unless the effective export price integration is Zonneplan.",
           "solar_forecast_sensor": "Sensor providing the solar production forecast in kWh (e.g., Solcast). If you have solar panels, configure this sensor — the system will only charge from the grid when solar forecast is insufficient. If you have no solar panels, leave this empty — the system will charge whenever battery energy is not enough for the day. Not required if you already configured this sensor in the initial setup step — it will be used automatically."
+        }
+      },
+      "price_export": {
+        "title": "Price sensors — Export price",
+        "description": "Optional. Without an export sensor the import price is also used for exports.",
+        "data": {
+          "export_price_sensor": "Export/feed-in price sensor (optional)",
+          "export_price_integration_type": "Export price integration (optional)",
+          "zonneplan_export_bonus_enabled": "Apply Zonneplan export bonus"
+        },
+        "data_description": {
+          "export_price_sensor": "Sensor with your feed-in price per kWh. Omnibattery uses it to value energy sent to the grid (discharge/sell decisions). Empty = import price is used (net metering).",
+          "export_price_integration_type": "Attribute layout of the export sensor. Empty = same as import. Tibber is not available here.",
+          "zonneplan_export_bonus_enabled": "Adds 10% + €0.02/kWh to Zonneplan export prices only. No effect for other providers."
         }
       },
       "realtime_price_config": {
@@ -754,6 +762,7 @@
           "batteries": "Batteries",
           "time_slots": "Time slots",
           "excluded_devices": "Excluded devices",
+          "price_sensors": "Price sensors",
           "predictive_charging": "Predictive charging",
           "weekly_full_charge": "Weekly full charge",
           "charge_delay": "Solar charge delay",
@@ -1094,18 +1103,46 @@
         "data": {
           "price_integration_type": "Price integration",
           "price_sensor": "Electricity price sensor",
-          "export_price_sensor": "Export/feed-in price sensor (optional)",
-          "export_price_integration_type": "Export price integration (optional)",
-          "zonneplan_export_bonus_enabled": "Apply Zonneplan export bonus",
           "solar_forecast_sensor": "Solar forecast sensor (kWh)"
         },
         "data_description": {
           "price_integration_type": "Select your electricity price provider integration. Nord Pool supports both the official Home Assistant integration and HACS. Tibber is service-based, so its price sensor can be left empty.",
           "price_sensor": "Sensor providing electricity prices (e.g., the official Nord Pool current-price sensor, a HACS Nordpool sensor, sensor.esios_pvpc for PVPC, or your CKW sensor for Switzerland)",
-          "export_price_sensor": "Sensor providing your export/feed-in prices. Leave empty to use the import price curve, which is correct when export is credited at the import price (net metering).",
-          "export_price_integration_type": "Attribute layout of the export price sensor. Leave empty to reuse the import integration. Tibber is not available here: it is service-based and its cache belongs to the import curve.",
-          "zonneplan_export_bonus_enabled": "Adds 10% and €0.02/kWh to Zonneplan export prices only. Has no effect unless the effective export price integration is Zonneplan.",
           "solar_forecast_sensor": "Sensor providing the solar production forecast in kWh (e.g., Solcast). If you have solar panels, configure this sensor — the system will only charge from the grid when solar forecast is insufficient. If you have no solar panels, leave this empty — the system will charge whenever battery energy is not enough for the day. Not required if you already configured this sensor in the initial setup step — it will be used automatically."
+        }
+      },
+      "price_sensors": {
+        "title": "Price sensors",
+        "description": "Choose which price source to change.",
+        "menu_options": {
+          "price_import": "Import price sensor",
+          "price_export": "Export price sensor"
+        }
+      },
+      "price_import": {
+        "title": "Price sensors — Import price",
+        "description": "The price you pay for electricity. Used to pick cheap charging hours.",
+        "data": {
+          "price_integration_type": "Price integration",
+          "price_sensor": "Electricity price sensor"
+        },
+        "data_description": {
+          "price_integration_type": "Select your electricity price provider integration. Nord Pool supports both the official Home Assistant integration and HACS. Tibber is service-based, so its price sensor can be left empty.",
+          "price_sensor": "Sensor providing electricity prices (e.g., the official Nord Pool current-price sensor, a HACS Nordpool sensor, sensor.esios_pvpc for PVPC, or your CKW sensor for Switzerland)"
+        }
+      },
+      "price_export": {
+        "title": "Price sensors — Export price",
+        "description": "Optional. Without an export sensor the import price is also used for exports.",
+        "data": {
+          "export_price_sensor": "Export/feed-in price sensor (optional)",
+          "export_price_integration_type": "Export price integration (optional)",
+          "zonneplan_export_bonus_enabled": "Apply Zonneplan export bonus"
+        },
+        "data_description": {
+          "export_price_sensor": "Sensor with your feed-in price per kWh. Omnibattery uses it to value energy sent to the grid (discharge/sell decisions). Empty = import price is used (net metering).",
+          "export_price_integration_type": "Attribute layout of the export sensor. Empty = same as import. Tibber is not available here.",
+          "zonneplan_export_bonus_enabled": "Adds 10% + €0.02/kWh to Zonneplan export prices only. No effect for other providers."
         }
       },
       "realtime_price_config": {

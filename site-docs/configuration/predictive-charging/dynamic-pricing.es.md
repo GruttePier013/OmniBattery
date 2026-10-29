@@ -19,9 +19,11 @@ Precio dinámico lee un calendario de precios futuros y compra el déficit energ
 
 1. Abre **Ajustes → Dispositivos y servicios → Omnibattery → Configurar** y elige **Precio dinámico** como modo de carga predictiva.
 2. Selecciona **Tipo de integración de precios** y después **Sensor de precio de electricidad**. Deja el sensor vacío para Tibber.
-3. Selecciona una previsión solar opcional y, si hace falta, un sensor de precio de exportación/inyección y su tipo de integración.
+3. Selecciona una previsión solar opcional y continúa al paso **Precio de exportación**. Elige ahí un sensor de precio de exportación/inyección y su tipo de integración, o déjalo vacío para reutilizar la curva del precio de importación (balance neto).
 4. Termina el formulario y confirma que **Carga predictiva** está activada en la pestaña **Control** de Omnibattery.
 5. Deja desactivados los controles de precio opcionales hasta que el horario básico se comporte como esperas; activa solo la política que corresponda a tu objetivo.
+
+Para cambiar cualquiera de las dos fuentes más adelante, abre **Configurar → Sensores de precio** y elige **Sensor de precio de importación** o **Sensor de precio de exportación**; cada una se guarda por separado.
 
 ![Configura una fuente de precios futuros](../../assets/screenshots/configuration/predictive-charging/dynamic-pricing-form.png){ width="650" style="display: block; margin: 0 auto;" }
 

@@ -155,9 +155,9 @@ def test_shared_export_selector_and_validation():
 
 
 @pytest.mark.parametrize("options", [False, True])
-async def test_zonneplan_export_bonus_shown_before_zonneplan_is_saved(options):
-    """A fresh setup still on the Nordpool default must offer the bonus in the
-    same form where Zonneplan gets picked, not only after a second visit."""
+async def test_zonneplan_export_bonus_is_offered_with_the_export_provider(options):
+    """The bonus sits in the same form where the export provider is picked, so
+    it is offered before Zonneplan has been saved, not only after a second visit."""
     from custom_components.omnibattery.config_flow import (
         MarstekVenusConfigFlow,
         OptionsFlowHandler,
@@ -170,9 +170,8 @@ async def test_zonneplan_export_bonus_shown_before_zonneplan_is_saved(options):
         config_entries=SimpleNamespace(async_get_known_entry=lambda _: config_entry),
         states=SimpleNamespace(get=lambda _: None),
     )
-    form = await flow.async_step_dynamic_pricing_config()
+    form = await flow.async_step_price_export()
     fields = {marker.schema: marker for marker in form["data_schema"].schema}
-    assert fields["price_integration_type"].default() == "nordpool"
     assert fields["zonneplan_export_bonus_enabled"].default() is False
 
 
@@ -222,13 +221,10 @@ async def test_switching_export_provider_keeps_selection_after_validation_error(
         states=SimpleNamespace(get=states.get),
     )
 
-    form = await flow.async_step_dynamic_pricing_config(
+    form = await flow.async_step_price_export(
         {
-            "price_integration_type": "nordpool",
-            "price_sensor": "sensor.import",
             "export_price_sensor": "sensor.export",
             "export_price_integration_type": "zonneplan",
-            "solar_forecast_sensor": "sensor.forecast",
         }
     )
 
@@ -237,8 +233,6 @@ async def test_switching_export_provider_keeps_selection_after_validation_error(
     schema = form["data_schema"].schema
     fields = {marker.schema: marker for marker in schema}
     assert "zonneplan_export_bonus_enabled" in fields
-    assert fields["price_integration_type"].default() == "nordpool"
-    assert fields["price_sensor"].default() == "sensor.import"
     assert fields["export_price_sensor"].description == {
         "suggested_value": "sensor.export"
     }
@@ -248,9 +242,6 @@ async def test_switching_export_provider_keeps_selection_after_validation_error(
     assert fields["zonneplan_export_bonus_enabled"].default() is (
         DEFAULT_ZONNEPLAN_EXPORT_BONUS_ENABLED
     )
-    assert fields["solar_forecast_sensor"].description == {
-        "suggested_value": "sensor.forecast"
-    }
 
 
 def test_parse_error_logs_offending_entry(caplog):
@@ -295,11 +286,17 @@ async def test_setup_and_options_validate_and_save_zonneplan(options, valid, bon
     if valid:
         assert flow.config_data["price_integration_type"] == "zonneplan"
         assert flow.config_data["price_sensor"] == "sensor.tariff"
+        # The import step hands over to the separate export step.
+        assert result["type"] == "form"
+        assert result["step_id"] == "price_export"
+        export_input = {}
+        if bonus_enabled is not None:
+            export_input["zonneplan_export_bonus_enabled"] = bonus_enabled
+        await flow.async_step_price_export(export_input)
         assert flow.config_data["zonneplan_export_bonus_enabled"] is (
             DEFAULT_ZONNEPLAN_EXPORT_BONUS_ENABLED
             if bonus_enabled is None
             else bonus_enabled
         )
-        assert result.get("errors", {}) == {}
     else:
         assert result["errors"]["price_sensor"] == "no_price_data"

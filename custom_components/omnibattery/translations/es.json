@@ -380,18 +380,26 @@
         "data": {
           "price_integration_type": "Integración de precios",
           "price_sensor": "Sensor de precio eléctrico",
-          "export_price_sensor": "Sensor de precio de inyección/exportación (opcional)",
-          "export_price_integration_type": "Integración del precio de exportación (opcional)",
-          "zonneplan_export_bonus_enabled": "Aplicar la bonificación de exportación de Zonneplan",
           "solar_forecast_sensor": "Sensor de predicción solar (kWh)"
         },
         "data_description": {
           "price_integration_type": "Selecciona tu integración de precios de electricidad. Nord Pool admite tanto la integración oficial de Home Assistant como la de HACS. Tibber funciona por servicio, así que su sensor puede dejarse vacío.",
           "price_sensor": "Sensor de precios (por ejemplo, el sensor de precio actual de Nord Pool oficial, un sensor Nordpool de HACS, sensor.esios_pvpc o tu sensor de CKW)",
-          "export_price_sensor": "Sensor que proporciona los precios de inyección. Déjalo vacío para usar la curva de precios de importación, que es lo correcto cuando la inyección se retribuye al precio de importación (balance neto).",
-          "export_price_integration_type": "Disposición de atributos del sensor de precio de exportación. Déjalo vacío para reutilizar la integración de importación. Tibber no está disponible aquí: está basado en servicio y su caché pertenece a la curva de importación.",
-          "zonneplan_export_bonus_enabled": "Añade 0,02 €/kWh y un 10% solo a los precios de exportación de Zonneplan. No tiene efecto si la integración efectiva del precio de exportación no es Zonneplan.",
           "solar_forecast_sensor": "Sensor que proporciona la predicción de producción solar en kWh (ej: Solcast). Si tienes paneles solares, configúralo — el sistema solo cargará desde la red cuando la previsión solar sea insuficiente. Si no tienes paneles, déjalo vacío — el sistema cargará cuando la batería no tenga energía suficiente para el día. No es necesario si ya configuraste este sensor en el paso inicial: se usará automáticamente."
+        }
+      },
+      "price_export": {
+        "title": "Sensores de precio — Exportación",
+        "description": "Opcional. Sin sensor de exportación, el precio de importación también se usa para los excedentes.",
+        "data": {
+          "export_price_sensor": "Sensor de precio de inyección/exportación (opcional)",
+          "export_price_integration_type": "Integración del precio de exportación (opcional)",
+          "zonneplan_export_bonus_enabled": "Aplicar la bonificación de exportación de Zonneplan"
+        },
+        "data_description": {
+          "export_price_sensor": "Sensor con tu precio de venta por kWh. Omnibattery lo usa para valorar la energía volcada a la red (descargar/vender). Vacío = se usa el precio de compra (balance neto).",
+          "export_price_integration_type": "Formato de atributos del sensor de exportación. Vacío = igual que la importación. Tibber no está disponible aquí.",
+          "zonneplan_export_bonus_enabled": "Suma un 10 % + 0,02 €/kWh solo a los precios de exportación de Zonneplan. Sin efecto con otros proveedores."
         }
       },
       "realtime_price_config": {
@@ -784,6 +792,7 @@
           "batteries": "Baterías",
           "time_slots": "Franjas horarias",
           "excluded_devices": "Dispositivos excluidos",
+          "price_sensors": "Sensores de precio",
           "predictive_charging": "Carga predictiva",
           "weekly_full_charge": "Carga completa semanal",
           "charge_delay": "Retraso de carga solar",
@@ -1103,18 +1112,46 @@
         "data": {
           "price_integration_type": "Integración de precios",
           "price_sensor": "Sensor de precio eléctrico",
-          "export_price_sensor": "Sensor de precio de inyección/exportación (opcional)",
-          "export_price_integration_type": "Integración del precio de exportación (opcional)",
-          "zonneplan_export_bonus_enabled": "Aplicar la bonificación de exportación de Zonneplan",
           "solar_forecast_sensor": "Sensor de predicción solar (kWh)"
         },
         "data_description": {
           "price_integration_type": "Selecciona tu integración de precios de electricidad. Nord Pool admite tanto la integración oficial de Home Assistant como la de HACS. Tibber funciona por servicio, así que su sensor puede dejarse vacío.",
           "price_sensor": "Sensor de precios (por ejemplo, el sensor de precio actual de Nord Pool oficial, un sensor Nordpool de HACS, sensor.esios_pvpc o tu sensor de CKW)",
-          "export_price_sensor": "Sensor que proporciona los precios de inyección. Déjalo vacío para usar la curva de precios de importación, que es lo correcto cuando la inyección se retribuye al precio de importación (balance neto).",
-          "export_price_integration_type": "Disposición de atributos del sensor de precio de exportación. Déjalo vacío para reutilizar la integración de importación. Tibber no está disponible aquí: está basado en servicio y su caché pertenece a la curva de importación.",
-          "zonneplan_export_bonus_enabled": "Añade un 10% y 0,02 €/kWh solo a los precios de exportación de Zonneplan. No tiene efecto si la integración efectiva del precio de exportación no es Zonneplan.",
           "solar_forecast_sensor": "Sensor que proporciona la predicción de producción solar en kWh (ej: Solcast). Si tienes paneles solares, configúralo — el sistema solo cargará desde la red cuando la previsión solar sea insuficiente. Si no tienes paneles, déjalo vacío — el sistema cargará cuando la batería no tenga energía suficiente para el día. No es necesario si ya configuraste este sensor en el paso inicial: se usará automáticamente."
+        }
+      },
+      "price_sensors": {
+        "title": "Sensores de precio",
+        "description": "Elige qué fuente de precio quieres cambiar.",
+        "menu_options": {
+          "price_import": "Sensor de precio de importación",
+          "price_export": "Sensor de precio de exportación"
+        }
+      },
+      "price_import": {
+        "title": "Sensores de precio — Importación",
+        "description": "El precio que pagas por la electricidad. Se usa para elegir las horas baratas de carga.",
+        "data": {
+          "price_integration_type": "Integración de precios",
+          "price_sensor": "Sensor de precio eléctrico"
+        },
+        "data_description": {
+          "price_integration_type": "Selecciona tu integración de precios de electricidad. Nord Pool admite tanto la integración oficial de Home Assistant como la de HACS. Tibber funciona por servicio, así que su sensor puede dejarse vacío.",
+          "price_sensor": "Sensor de precios (por ejemplo, el sensor de precio actual de Nord Pool oficial, un sensor Nordpool de HACS, sensor.esios_pvpc o tu sensor de CKW)"
+        }
+      },
+      "price_export": {
+        "title": "Sensores de precio — Exportación",
+        "description": "Opcional. Sin sensor de exportación, el precio de importación también se usa para los excedentes.",
+        "data": {
+          "export_price_sensor": "Sensor de precio de inyección/exportación (opcional)",
+          "export_price_integration_type": "Integración del precio de exportación (opcional)",
+          "zonneplan_export_bonus_enabled": "Aplicar la bonificación de exportación de Zonneplan"
+        },
+        "data_description": {
+          "export_price_sensor": "Sensor con tu precio de venta por kWh. Omnibattery lo usa para valorar la energía volcada a la red (descargar/vender). Vacío = se usa el precio de compra (balance neto).",
+          "export_price_integration_type": "Formato de atributos del sensor de exportación. Vacío = igual que la importación. Tibber no está disponible aquí.",
+          "zonneplan_export_bonus_enabled": "Suma un 10 % + 0,02 €/kWh solo a los precios de exportación de Zonneplan. Sin efecto con otros proveedores."
         }
       },
       "realtime_price_config": {

@@ -51,17 +51,41 @@ def _flow_with_states(data: dict, states: dict, options: bool):
     return flow
 
 
-async def test_dynamic_pricing_asks_only_for_price_sources():
+async def test_dynamic_pricing_asks_only_for_the_import_price_source():
     result = await _flow({}).async_step_dynamic_pricing_config()
 
     assert _schema_keys(result) == {
         "price_integration_type",
         "price_sensor",
+        "solar_forecast_sensor",
+    }
+
+
+async def test_export_price_is_its_own_step():
+    result = await _flow({}).async_step_price_export()
+
+    assert result["step_id"] == "price_export"
+    assert _schema_keys(result) == {
         "export_price_sensor",
         "export_price_integration_type",
         "zonneplan_export_bonus_enabled",
-        "solar_forecast_sensor",
     }
+
+
+async def test_price_sensors_menu_offers_import_and_export_separately():
+    result = await _flow({}).async_step_price_sensors()
+
+    assert result["type"] == "menu"
+    assert result["menu_options"] == ["price_import", "price_export"]
+    init = await _flow({}).async_step_init()
+    assert "price_sensors" in init["menu_options"]
+
+
+async def test_import_price_step_has_no_export_or_forecast_fields():
+    result = await _flow({}).async_step_price_import()
+
+    assert result["step_id"] == "price_import"
+    assert _schema_keys(result) == {"price_integration_type", "price_sensor"}
 
 
 async def test_realtime_price_asks_only_for_price_sources():

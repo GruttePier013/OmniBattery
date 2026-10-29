@@ -1,5 +1,15 @@
 # Changelog
 
+## [Unreleased]
+
+### Added
+
+- **Price sensors menu in the options flow**: change the import price source and the export (feed-in) price source later, each on its own, without walking through the whole predictive-charging flow or touching its mode.
+
+### Changed
+
+- **Export price now has its own step** in the setup flow and in Predictive charging → Dynamic Pricing, split from the import price. Every field of the new step carries a short explanation of how Omnibattery uses the export curve, in all languages.
+
 ## [1.5.0] - 2026-10-04
 
 ### Added
