@@ -19,9 +19,11 @@ Dynamic Pricing reads a future price calendar and buys the calculated energy def
 
 1. Open **Settings → Devices & services → Omnibattery → Configure** and choose **Dynamic Pricing** as the predictive charging mode.
 2. Select **Price integration type**, then choose **Electricity price sensor**. Leave the sensor empty for Tibber.
-3. Select an optional solar forecast and, if required, an export/feed-in price sensor and its integration type.
+3. Select an optional solar forecast, then continue to the **Export price** step. Pick an export/feed-in price sensor and its integration type there, or leave it empty to reuse the import price curve (net metering).
 4. Finish the form, then confirm **Predictive Charging** is on in the Omnibattery **Control** tab.
 5. Leave the optional price controls off until the basic schedule behaves as expected; enable only the policy that matches your goal.
+
+To change either source later, open **Configure → Price sensors** and choose **Import price sensor** or **Export price sensor**; each is saved on its own.
 
 ![Configure a future-price source](../../assets/screenshots/configuration/predictive-charging/dynamic-pricing-form.png){ width="650" style="display: block; margin: 0 auto;" }
 

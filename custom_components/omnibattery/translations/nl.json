@@ -380,18 +380,26 @@
         "data": {
           "price_integration_type": "Prijsintegratie",
           "price_sensor": "Prijssensor",
-          "export_price_sensor": "Sensor voor teruglever-/exportprijs (optioneel)",
-          "export_price_integration_type": "Integratie voor de exportprijs (optioneel)",
-          "zonneplan_export_bonus_enabled": "Zonneplan-exportbonus toepassen",
           "solar_forecast_sensor": "Zonnevoorspellingssensor (kWh)"
         },
         "data_description": {
           "price_integration_type": "Selecteer de domoticaintegratie die stroomprijs gegevens levert",
           "price_sensor": "Sensor met uurlijkse stroomprijzen (bijv. sensor.nordpool_kwh_nl_eur_3_10_025)",
-          "export_price_sensor": "Sensor met de terugleverprijzen. Laat leeg om de importprijscurve te gebruiken; dat klopt wanneer teruglevering tegen de importprijs wordt vergoed (salderen).",
-          "export_price_integration_type": "Attribuutindeling van de exportprijssensor. Laat leeg om de importintegratie te hergebruiken. Tibber is hier niet beschikbaar: die is servicegebaseerd en de cache hoort bij de importcurve.",
-          "zonneplan_export_bonus_enabled": "Telt alleen bij Zonneplan-exportprijzen €0,02/kWh en 10% op. Heeft geen effect tenzij de effectieve exportprijsintegratie Zonneplan is.",
           "solar_forecast_sensor": "Sensor die de zonneproductievoorspelling in kWh levert (bijv. Solcast). Met zonnepanelen: configureer deze sensor — het systeem laadt alleen van het net als de voorspelling onvoldoende is. Zonder zonnepanelen: laat leeg — het systeem laadt wanneer de batterij-energie niet voldoende is voor de dag. Niet vereist als u deze sensor al in de eerste stap heeft geconfigureerd — hij wordt automatisch gebruikt."
+        }
+      },
+      "price_export": {
+        "title": "Prijssensoren — Exportprijs",
+        "description": "Optioneel. Zonder exportsensor wordt de importprijs ook voor teruglevering gebruikt.",
+        "data": {
+          "export_price_sensor": "Sensor voor teruglever-/exportprijs (optioneel)",
+          "export_price_integration_type": "Integratie voor de exportprijs (optioneel)",
+          "zonneplan_export_bonus_enabled": "Zonneplan-exportbonus toepassen"
+        },
+        "data_description": {
+          "export_price_sensor": "Sensor met je terugleverprijs per kWh. Omnibattery waardeert er teruglevering mee (ontladen/verkopen). Leeg = importprijs wordt gebruikt (salderen).",
+          "export_price_integration_type": "Attribuutindeling van de exportsensor. Leeg = zelfde als import. Tibber is hier niet beschikbaar.",
+          "zonneplan_export_bonus_enabled": "Telt 10% + €0,02/kWh op bij Zonneplan-exportprijzen. Geen effect bij andere leveranciers."
         }
       },
       "realtime_price_config": {
@@ -784,6 +792,7 @@
           "batteries": "Batterijen",
           "time_slots": "Tijdslots",
           "excluded_devices": "Uitgesloten apparaten",
+          "price_sensors": "Prijssensoren",
           "predictive_charging": "Voorspellend laden",
           "weekly_full_charge": "Wekelijkse volledige lading",
           "charge_delay": "Zonne-oplaadvertraging",
@@ -1103,18 +1112,46 @@
         "data": {
           "price_integration_type": "Prijsintegratie",
           "price_sensor": "Prijssensor",
-          "export_price_sensor": "Sensor voor teruglever-/exportprijs (optioneel)",
-          "export_price_integration_type": "Integratie voor de exportprijs (optioneel)",
-          "zonneplan_export_bonus_enabled": "Zonneplan-exportbonus toepassen",
           "solar_forecast_sensor": "Zonnevoorspellingssensor (kWh)"
         },
         "data_description": {
           "price_integration_type": "Selecteer de domoticaintegratie die stroomprijs gegevens levert",
           "price_sensor": "Sensor met uurlijkse stroomprijzen (bijv. sensor.nordpool_kwh_nl_eur_3_10_025)",
-          "export_price_sensor": "Sensor met de terugleverprijzen. Laat leeg om de importprijscurve te gebruiken; dat klopt wanneer teruglevering tegen de importprijs wordt vergoed (salderen).",
-          "export_price_integration_type": "Attribuutindeling van de exportprijssensor. Laat leeg om de importintegratie te hergebruiken. Tibber is hier niet beschikbaar: die is servicegebaseerd en de cache hoort bij de importcurve.",
-          "zonneplan_export_bonus_enabled": "Telt alleen bij Zonneplan-exportprijzen 10% en €0,02/kWh op. Heeft geen effect tenzij de effectieve exportprijsintegratie Zonneplan is.",
           "solar_forecast_sensor": "Sensor die de zonneproductievoorspelling in kWh levert (bijv. Solcast). Met zonnepanelen: configureer deze sensor — het systeem laadt alleen van het net als de voorspelling onvoldoende is. Zonder zonnepanelen: laat leeg — het systeem laadt wanneer de batterij-energie niet voldoende is voor de dag. Niet vereist als u deze sensor al in de eerste stap heeft geconfigureerd — hij wordt automatisch gebruikt."
+        }
+      },
+      "price_sensors": {
+        "title": "Prijssensoren",
+        "description": "Kies welke prijsbron je wilt wijzigen.",
+        "menu_options": {
+          "price_import": "Importprijs-sensor",
+          "price_export": "Exportprijs-sensor"
+        }
+      },
+      "price_import": {
+        "title": "Prijssensoren — Importprijs",
+        "description": "De prijs die je voor stroom betaalt. Wordt gebruikt om goedkope laaduren te kiezen.",
+        "data": {
+          "price_integration_type": "Prijsintegratie",
+          "price_sensor": "Prijssensor"
+        },
+        "data_description": {
+          "price_integration_type": "Selecteer de domoticaintegratie die stroomprijs gegevens levert",
+          "price_sensor": "Sensor met uurlijkse stroomprijzen (bijv. sensor.nordpool_kwh_nl_eur_3_10_025)"
+        }
+      },
+      "price_export": {
+        "title": "Prijssensoren — Exportprijs",
+        "description": "Optioneel. Zonder exportsensor wordt de importprijs ook voor teruglevering gebruikt.",
+        "data": {
+          "export_price_sensor": "Sensor voor teruglever-/exportprijs (optioneel)",
+          "export_price_integration_type": "Integratie voor de exportprijs (optioneel)",
+          "zonneplan_export_bonus_enabled": "Zonneplan-exportbonus toepassen"
+        },
+        "data_description": {
+          "export_price_sensor": "Sensor met je terugleverprijs per kWh. Omnibattery waardeert er teruglevering mee (ontladen/verkopen). Leeg = importprijs wordt gebruikt (salderen).",
+          "export_price_integration_type": "Attribuutindeling van de exportsensor. Leeg = zelfde als import. Tibber is hier niet beschikbaar.",
+          "zonneplan_export_bonus_enabled": "Telt 10% + €0,02/kWh op bij Zonneplan-exportprijzen. Geen effect bij andere leveranciers."
         }
       },
       "realtime_price_config": {

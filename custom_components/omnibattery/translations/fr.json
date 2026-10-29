@@ -380,18 +380,26 @@
         "data": {
           "price_integration_type": "Type d'intégration de prix",
           "price_sensor": "Capteur de prix",
-          "export_price_sensor": "Capteur de prix d'injection/revente (optionnel)",
-          "export_price_integration_type": "Intégration du prix d'export (optionnel)",
-          "zonneplan_export_bonus_enabled": "Appliquer le bonus d'injection Zonneplan",
           "solar_forecast_sensor": "Capteur de prévision solaire (kWh)"
         },
         "data_description": {
           "price_integration_type": "Sélectionnez l'intégration domotique qui fournit les données de prix de l'électricité",
           "price_sensor": "Capteur contenant les prix horaires de l'électricité (ex : sensor.nordpool_kwh_fr_eur_3_10_025)",
-          "export_price_sensor": "Capteur fournissant les prix d'injection. Laisser vide pour utiliser la courbe des prix d'import, ce qui est correct lorsque l'injection est rémunérée au prix d'import (net metering).",
-          "export_price_integration_type": "Disposition des attributs du capteur de prix d'export. Laisser vide pour réutiliser l'intégration d'import. Tibber n'est pas disponible ici : il repose sur un service et son cache appartient à la courbe d'import.",
-          "zonneplan_export_bonus_enabled": "Ajoute 0,02 €/kWh et 10 % aux prix d'export Zonneplan uniquement. Sans effet si l'intégration de prix d'export réellement utilisée n'est pas Zonneplan.",
           "solar_forecast_sensor": "Capteur fournissant la prévision de production solaire en kWh (ex : Solcast). Avec panneaux solaires : configurez ce capteur — le système ne chargera depuis le réseau que si la prévision est insuffisante. Sans panneaux solaires : laissez vide — le système chargera quand l'énergie de la batterie est insuffisante pour la journée. Non requis si ce capteur a déjà été configuré à l'étape initiale — il sera utilisé automatiquement."
+        }
+      },
+      "price_export": {
+        "title": "Capteurs de prix — Export",
+        "description": "Facultatif. Sans capteur d'export, le prix d'import sert aussi pour l'injection.",
+        "data": {
+          "export_price_sensor": "Capteur de prix d'injection/revente (optionnel)",
+          "export_price_integration_type": "Intégration du prix d'export (optionnel)",
+          "zonneplan_export_bonus_enabled": "Appliquer le bonus d'injection Zonneplan"
+        },
+        "data_description": {
+          "export_price_sensor": "Capteur du prix de rachat par kWh. Omnibattery l'utilise pour valoriser l'énergie injectée (décharge/vente). Vide = le prix d'import est utilisé (compensation).",
+          "export_price_integration_type": "Format d'attributs du capteur d'export. Vide = identique à l'import. Tibber n'est pas disponible ici.",
+          "zonneplan_export_bonus_enabled": "Ajoute 10 % + 0,02 €/kWh aux seuls prix d'export Zonneplan. Sans effet avec les autres fournisseurs."
         }
       },
       "realtime_price_config": {
@@ -784,6 +792,7 @@
           "batteries": "Batteries",
           "time_slots": "Plages horaires",
           "excluded_devices": "Appareils exclus",
+          "price_sensors": "Capteurs de prix",
           "predictive_charging": "Charge prédictive",
           "weekly_full_charge": "Charge complète hebdomadaire",
           "charge_delay": "Retard de charge solaire",
@@ -1103,18 +1112,46 @@
         "data": {
           "price_integration_type": "Type d'intégration de prix",
           "price_sensor": "Capteur de prix",
-          "export_price_sensor": "Capteur de prix d'injection/revente (optionnel)",
-          "export_price_integration_type": "Intégration du prix d'export (optionnel)",
-          "zonneplan_export_bonus_enabled": "Appliquer le bonus d'injection Zonneplan",
           "solar_forecast_sensor": "Capteur de prévision solaire (kWh)"
         },
         "data_description": {
           "price_integration_type": "Sélectionnez l'intégration domotique qui fournit les données de prix de l'électricité",
           "price_sensor": "Capteur contenant les prix horaires de l'électricité (ex : sensor.nordpool_kwh_fr_eur_3_10_025)",
-          "export_price_sensor": "Capteur fournissant les prix d'injection. Laisser vide pour utiliser la courbe des prix d'import, ce qui est correct lorsque l'injection est rémunérée au prix d'import (net metering).",
-          "export_price_integration_type": "Disposition des attributs du capteur de prix d'export. Laisser vide pour réutiliser l'intégration d'import. Tibber n'est pas disponible ici : il repose sur un service et son cache appartient à la courbe d'import.",
-          "zonneplan_export_bonus_enabled": "Ajoute 10 % et 0,02 €/kWh aux prix d'export Zonneplan uniquement. Sans effet si l'intégration de prix d'export réellement utilisée n'est pas Zonneplan.",
           "solar_forecast_sensor": "Capteur fournissant la prévision de production solaire en kWh (ex : Solcast). Avec panneaux solaires : configurez ce capteur — le système ne chargera depuis le réseau que si la prévision est insuffisante. Sans panneaux solaires : laissez vide — le système chargera quand l'énergie de la batterie est insuffisante pour la journée. Non requis si ce capteur a déjà été configuré à l'étape initiale — il sera utilisé automatiquement."
+        }
+      },
+      "price_sensors": {
+        "title": "Capteurs de prix",
+        "description": "Choisissez la source de prix à modifier.",
+        "menu_options": {
+          "price_import": "Capteur de prix d'import",
+          "price_export": "Capteur de prix d'export"
+        }
+      },
+      "price_import": {
+        "title": "Capteurs de prix — Import",
+        "description": "Le prix que vous payez l'électricité. Sert à choisir les heures de charge bon marché.",
+        "data": {
+          "price_integration_type": "Type d'intégration de prix",
+          "price_sensor": "Capteur de prix"
+        },
+        "data_description": {
+          "price_integration_type": "Sélectionnez l'intégration domotique qui fournit les données de prix de l'électricité",
+          "price_sensor": "Capteur contenant les prix horaires de l'électricité (ex : sensor.nordpool_kwh_fr_eur_3_10_025)"
+        }
+      },
+      "price_export": {
+        "title": "Capteurs de prix — Export",
+        "description": "Facultatif. Sans capteur d'export, le prix d'import sert aussi pour l'injection.",
+        "data": {
+          "export_price_sensor": "Capteur de prix d'injection/revente (optionnel)",
+          "export_price_integration_type": "Intégration du prix d'export (optionnel)",
+          "zonneplan_export_bonus_enabled": "Appliquer le bonus d'injection Zonneplan"
+        },
+        "data_description": {
+          "export_price_sensor": "Capteur du prix de rachat par kWh. Omnibattery l'utilise pour valoriser l'énergie injectée (décharge/vente). Vide = le prix d'import est utilisé (compensation).",
+          "export_price_integration_type": "Format d'attributs du capteur d'export. Vide = identique à l'import. Tibber n'est pas disponible ici.",
+          "zonneplan_export_bonus_enabled": "Ajoute 10 % + 0,02 €/kWh aux seuls prix d'export Zonneplan. Sans effet avec les autres fournisseurs."
         }
       },
       "realtime_price_config": {

@@ -380,18 +380,26 @@
         "data": {
           "price_integration_type": "Integració de preus",
           "price_sensor": "Sensor de preu elèctric",
-          "export_price_sensor": "Sensor de preu d'injecció/exportació (opcional)",
-          "export_price_integration_type": "Integració del preu d'exportació (opcional)",
-          "zonneplan_export_bonus_enabled": "Aplica la bonificació d'exportació de Zonneplan",
           "solar_forecast_sensor": "Sensor de predicció solar (kWh)"
         },
         "data_description": {
           "price_integration_type": "Selecciona la teva integració de preus d'electricitat",
           "price_sensor": "Sensor que proporciona preus horaris d'electricitat",
-          "export_price_sensor": "Sensor que proporciona els preus d'injecció. Deixa'l buit per fer servir la corba de preus d'importació, que és el correcte quan la injecció es retribueix al preu d'importació (balanç net).",
-          "export_price_integration_type": "Disposició d'atributs del sensor de preu d'exportació. Deixa'l buit per reutilitzar la integració d'importació. Tibber no hi és disponible: està basat en servei i la seva memòria cau pertany a la corba d'importació.",
-          "zonneplan_export_bonus_enabled": "Afegeix 0,02 €/kWh i un 10% només als preus d'exportació de Zonneplan. No té efecte si la integració efectiva del preu d'exportació no és Zonneplan.",
           "solar_forecast_sensor": "Sensor que proporciona la predicció de producció solar en kWh (ex: Solcast). Si tens panells solars, configura'l — el sistema només carregarà des de la xarxa quan la previsió solar sigui insuficient. Si no tens panells, deixa'l buit — el sistema carregarà quan la bateria no tingui energia suficient per al dia. No cal si ja has configurat aquest sensor al pas inicial: s'utilitzarà automàticament."
+        }
+      },
+      "price_export": {
+        "title": "Sensors de preu — Exportació",
+        "description": "Opcional. Sense sensor d'exportació, el preu d'importació també s'usa per a l'excedent.",
+        "data": {
+          "export_price_sensor": "Sensor de preu d'injecció/exportació (opcional)",
+          "export_price_integration_type": "Integració del preu d'exportació (opcional)",
+          "zonneplan_export_bonus_enabled": "Aplica la bonificació d'exportació de Zonneplan"
+        },
+        "data_description": {
+          "export_price_sensor": "Sensor amb el teu preu de venda per kWh. Omnibattery el fa servir per valorar l'energia injectada (descàrrega/venda). Buit = s'usa el preu de compra (balanç net).",
+          "export_price_integration_type": "Format d'atributs del sensor d'exportació. Buit = igual que la importació. Tibber no està disponible aquí.",
+          "zonneplan_export_bonus_enabled": "Suma un 10 % + 0,02 €/kWh només als preus d'exportació de Zonneplan. Sense efecte amb altres proveïdors."
         }
       },
       "realtime_price_config": {
@@ -784,6 +792,7 @@
           "batteries": "Bateries",
           "time_slots": "Franges horàries",
           "excluded_devices": "Dispositius exclosos",
+          "price_sensors": "Sensors de preu",
           "predictive_charging": "Càrrega predictiva",
           "weekly_full_charge": "Càrrega completa setmanal",
           "charge_delay": "Retard de càrrega solar",
@@ -1103,18 +1112,46 @@
         "data": {
           "price_integration_type": "Integració de preus",
           "price_sensor": "Sensor de preu elèctric",
-          "export_price_sensor": "Sensor de preu d'injecció/exportació (opcional)",
-          "export_price_integration_type": "Integració del preu d'exportació (opcional)",
-          "zonneplan_export_bonus_enabled": "Aplica la bonificació d'exportació de Zonneplan",
           "solar_forecast_sensor": "Sensor de predicció solar (kWh)"
         },
         "data_description": {
           "price_integration_type": "Selecciona la teva integració de preus d'electricitat",
           "price_sensor": "Sensor que proporciona preus horaris d'electricitat",
-          "export_price_sensor": "Sensor que proporciona els preus d'injecció. Deixa'l buit per fer servir la corba de preus d'importació, que és el correcte quan la injecció es retribueix al preu d'importació (balanç net).",
-          "export_price_integration_type": "Disposició d'atributs del sensor de preu d'exportació. Deixa'l buit per reutilitzar la integració d'importació. Tibber no hi és disponible: està basat en servei i la seva memòria cau pertany a la corba d'importació.",
-          "zonneplan_export_bonus_enabled": "Afegeix 10% i 0,02 €/kWh només als preus d'exportació de Zonneplan. No té efecte si la integració efectiva del preu d'exportació no és Zonneplan.",
           "solar_forecast_sensor": "Sensor que proporciona la predicció de producció solar en kWh (ex: Solcast). Si tens panells solars, configura'l — el sistema només carregarà des de la xarxa quan la previsió solar sigui insuficient. Si no tens panells, deixa'l buit — el sistema carregarà quan la bateria no tingui energia suficient per al dia. No cal si ja has configurat aquest sensor al pas inicial: s'utilitzarà automàticament."
+        }
+      },
+      "price_sensors": {
+        "title": "Sensors de preu",
+        "description": "Tria quina font de preu vols canviar.",
+        "menu_options": {
+          "price_import": "Sensor de preu d'importació",
+          "price_export": "Sensor de preu d'exportació"
+        }
+      },
+      "price_import": {
+        "title": "Sensors de preu — Importació",
+        "description": "El preu que pagues per l'electricitat. S'usa per triar les hores barates de càrrega.",
+        "data": {
+          "price_integration_type": "Integració de preus",
+          "price_sensor": "Sensor de preu elèctric"
+        },
+        "data_description": {
+          "price_integration_type": "Selecciona la teva integració de preus d'electricitat",
+          "price_sensor": "Sensor que proporciona preus horaris d'electricitat"
+        }
+      },
+      "price_export": {
+        "title": "Sensors de preu — Exportació",
+        "description": "Opcional. Sense sensor d'exportació, el preu d'importació també s'usa per a l'excedent.",
+        "data": {
+          "export_price_sensor": "Sensor de preu d'injecció/exportació (opcional)",
+          "export_price_integration_type": "Integració del preu d'exportació (opcional)",
+          "zonneplan_export_bonus_enabled": "Aplica la bonificació d'exportació de Zonneplan"
+        },
+        "data_description": {
+          "export_price_sensor": "Sensor amb el teu preu de venda per kWh. Omnibattery el fa servir per valorar l'energia injectada (descàrrega/venda). Buit = s'usa el preu de compra (balanç net).",
+          "export_price_integration_type": "Format d'atributs del sensor d'exportació. Buit = igual que la importació. Tibber no està disponible aquí.",
+          "zonneplan_export_bonus_enabled": "Suma un 10 % + 0,02 €/kWh només als preus d'exportació de Zonneplan. Sense efecte amb altres proveïdors."
         }
       },
       "realtime_price_config": {
